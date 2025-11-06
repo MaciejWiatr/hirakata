@@ -1,0 +1,118 @@
+[gd_scene load_steps=16 format=3 uid="uid://clyjoqbuo0new"]
+
+[ext_resource type="Script" uid="uid://cvm4qcgbj0n3b" path="res://scripts/kata.gd" id="1_dd2gq"]
+[ext_resource type="Texture2D" uid="uid://dp74jghtgntkp" path="res://sprites/enemies-hirakata.png" id="1_nhqbn"]
+[ext_resource type="FontFile" uid="uid://b7bjtd4jxtvrm" path="res://fonts/DotGothic16-Regular.ttf" id="3_u6mme"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dd2gq"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(0, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sh2fe"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(12, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d8ox6"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(24, 12, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s3y05"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bufyv"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndrwp"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s2a8e"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(0, 24, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xcstc"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(12, 24, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_snm5y"]
+atlas = ExtResource("1_nhqbn")
+region = Rect2(24, 24, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1emx2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dd2gq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sh2fe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d8ox6")
+}],
+"loop": true,
+"name": &"bamboo",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s3y05")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bufyv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ndrwp")
+}],
+"loop": true,
+"name": &"nigiri",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s2a8e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xcstc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_snm5y")
+}],
+"loop": true,
+"name": &"wood",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psova"]
+size = Vector2(12.25, 10.375)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4qdhy"]
+font = ExtResource("3_u6mme")
+font_size = 32
+font_color = Color(0, 0, 0, 1)
+outline_size = 8
+
+[node name="Kata" type="Area2D"]
+script = ExtResource("1_dd2gq")
+
+[node name="MainSprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_1emx2")
+animation = &"nigiri"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.125, 0.625)
+shape = SubResource("RectangleShape2D_psova")
+
+[node name="Label" type="Label" parent="."]
+offset_left = -28.0
+offset_top = -5.0
+offset_right = 28.0
+offset_bottom = 68.0
+text = "お"
+label_settings = SubResource("LabelSettings_4qdhy")
+horizontal_alignment = 1
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

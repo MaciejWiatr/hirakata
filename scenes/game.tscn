@@ -1,0 +1,101 @@
+[gd_scene load_steps=12 format=3 uid="uid://ds2i5r0bbyxht"]
+
+[ext_resource type="Script" uid="uid://ij1j84xew1ln" path="res://scenes/game.gd" id="1_yqjtg"]
+[ext_resource type="Texture2D" uid="uid://bc5fbjbrju50u" path="res://sprites/bg.png" id="2_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://0884x6w2dtlu" path="res://scenes/ninja.tscn" id="2_lnu2h"]
+[ext_resource type="FontFile" uid="uid://b7bjtd4jxtvrm" path="res://fonts/DotGothic16-Regular.ttf" id="4_lbhrr"]
+[ext_resource type="Texture2D" uid="uid://d0vxsvbhx5yfd" path="res://sprites/scroll-shadow.png" id="5_p57ef"]
+[ext_resource type="Texture2D" uid="uid://bpmnoy0dtuqap" path="res://sprites/scroll.png" id="6_u5sy4"]
+[ext_resource type="Texture2D" uid="uid://chvqos6wlljvs" path="res://sprites/flower.png" id="7_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://clyjoqbuo0new" path="res://scenes/kata.tscn" id="8_gee14"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_yqjtg"]
+font = ExtResource("4_lbhrr")
+font_size = 60
+outline_size = 16
+outline_color = Color(0, 0.16244909, 0.070128344, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_lnu2h"]
+font = ExtResource("4_lbhrr")
+font_size = 40
+outline_size = 16
+outline_color = Color(0, 0.16078432, 0.07058824, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p57ef"]
+bg_color = Color(1, 1, 1, 0.22745098)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+corner_detail = 20
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_yqjtg")
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(8, 8)
+texture = ExtResource("2_lbhrr")
+
+[node name="Ninja" parent="." instance=ExtResource("2_lnu2h")]
+position = Vector2(396, 163)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="KataDisplay" type="Label" parent="."]
+offset_left = -441.0
+offset_top = -69.0
+offset_right = 444.0
+offset_bottom = 49.0
+text = "Welcome to hirakata!"
+label_settings = SubResource("LabelSettings_yqjtg")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 489.0
+offset_top = -297.0
+offset_right = 539.0
+offset_bottom = -238.0
+text = "10"
+label_settings = SubResource("LabelSettings_lnu2h")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.19607843)
+position = Vector2(-1, 202)
+scale = Vector2(8, 8)
+texture = ExtResource("5_p57ef")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(-4, 192)
+scale = Vector2(8, 8)
+texture = ExtResource("6_u5sy4")
+
+[node name="MainInput" type="LineEdit" parent="."]
+offset_left = -91.0
+offset_top = 165.0
+offset_right = 89.0
+offset_bottom = 213.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/font_size = 26
+theme_override_styles/normal = SubResource("StyleBoxFlat_p57ef")
+alignment = 1
+max_length = 4
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+position = Vector2(-484, -248)
+scale = Vector2(8, 8)
+texture = ExtResource("7_u5sy4")
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+position = Vector2(-348, -248)
+scale = Vector2(8, 8)
+texture = ExtResource("7_u5sy4")
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+position = Vector2(-212, -248)
+scale = Vector2(8, 8)
+texture = ExtResource("7_u5sy4")
+
+[node name="Kata" parent="." instance=ExtResource("8_gee14")]
+position = Vector2(128, -23)

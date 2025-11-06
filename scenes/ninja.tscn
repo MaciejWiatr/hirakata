@@ -1,0 +1,101 @@
+[gd_scene load_steps=13 format=3 uid="uid://0884x6w2dtlu"]
+
+[ext_resource type="Script" uid="uid://d07li555m5gmh" path="res://scenes/ninja.gd" id="2_kpdli"]
+[ext_resource type="Texture2D" uid="uid://d11x1lhochpuv" path="res://sprites/ninja-sheet.png" id="3_kpdli"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpdli"]
+atlas = ExtResource("3_kpdli")
+region = Rect2(192, 0, 48, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r7j1o"]
+atlas = ExtResource("3_kpdli")
+region = Rect2(0, 0, 48, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5krh3"]
+atlas = ExtResource("3_kpdli")
+region = Rect2(48, 0, 48, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_he7mg"]
+atlas = ExtResource("3_kpdli")
+region = Rect2(96, 0, 48, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pgge"]
+atlas = ExtResource("3_kpdli")
+region = Rect2(144, 0, 48, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gottu"]
+atlas = ExtResource("3_kpdli")
+region = Rect2(240, 0, 48, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a08uq"]
+atlas = ExtResource("3_kpdli")
+region = Rect2(288, 0, 48, 40)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mwrlm"]
+atlas = ExtResource("3_kpdli")
+region = Rect2(336, 0, 48, 40)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fb2jl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpdli")
+}],
+"loop": false,
+"name": &"fly",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r7j1o")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5krh3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_he7mg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pgge")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gottu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a08uq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mwrlm")
+}],
+"loop": false,
+"name": &"slash",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4i837"]
+radius = 117.0
+height = 334.0
+
+[node name="Ninja" type="Area2D"]
+script = ExtResource("2_kpdli")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -1)
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_fb2jl")
+animation = &"idle"
+speed_scale = 1.5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 17)
+shape = SubResource("CapsuleShape2D_4i837")
