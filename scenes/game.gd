@@ -1,5 +1,8 @@
 extends Node2D
 
+# Preload your Kata scene
+const KataScene = preload("res://scenes/kata.tscn")  # Adjust path to your Kata scene
+
 var hiragana_list = [
 	# Vowels
 	{"hiragana": "あ", "romaji": "a"},
@@ -30,18 +33,12 @@ var hiragana_list = [
 var current_score = 0:
 	set(value):
 		current_score = value
-		$ScoreLabel.text = str(value)  # Convert to string!
+		$ScoreLabel.text = str(value)
 
-var current_item = null:
-	set(value):
-		current_item = value
-		if value:  # Add null check for safety
-			$KataDisplay.text = value.hiragana
+var current_item = null
+var current_kata_node = null
 
 func _ready() -> void:
-	current_item = hiragana_list.pick_random()
-		
-	await get_tree().create_timer(1).timeout
 	
 	pick_new_item()
 	
@@ -49,14 +46,50 @@ func _ready() -> void:
 	$MainInput.text_changed.connect(_on_text_changed)
 	
 func _on_text_changed(new_text: String) -> void:
-	if new_text == current_item.romaji:
+	if current_item and new_text == current_item.romaji:
 		$Ninja.animate_cut()
+		$Camera2D.shake()
 		
-		await get_tree().create_timer(0.65).timeout
+		await get_tree().create_timer(0.2).timeout
 		
 		$MainInput.clear()
+		
+		if current_kata_node:
+			current_kata_node.remove()
+			current_kata_node = null
+		
 		pick_new_item()
 		current_score += 1
 		
 func pick_new_item():
+	await get_tree().create_timer(0.4).timeout
+	
 	current_item = hiragana_list.pick_random()
+	
+	var spawn_pos = get_random_border_position()
+	var center = get_viewport_rect().size / 2
+	
+	var kata = KataScene.instantiate()
+	kata.setup(spawn_pos, center, current_item.hiragana)
+	
+	add_child(kata)
+	
+	current_kata_node = kata
+
+func get_random_border_position(margin: float = -50) -> Vector2:
+	var viewport_size = get_viewport_rect().size
+	var spawn_pos = Vector2.ZERO
+	
+	var edge = randi_range(0, 3)
+	
+	match edge:
+		0:  # Top edge
+			spawn_pos = Vector2(randf_range(0, viewport_size.x), -margin)
+		1:  # Right edge
+			spawn_pos = Vector2(viewport_size.x + margin, randf_range(0, viewport_size.y))
+		2:  # Bottom edge
+			spawn_pos = Vector2(randf_range(0, viewport_size.x), viewport_size.y + margin)
+		3:  # Left edge
+			spawn_pos = Vector2(-margin, randf_range(0, viewport_size.y))
+	
+	return spawn_pos

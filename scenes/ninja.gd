@@ -11,7 +11,7 @@ func animate_cut() -> void:
 		tween.kill()
 	
 	var camera = $"../Camera2D"
-	var camera_center = camera.get_screen_center_position()
+	var camera_center:Vector2 = camera.get_screen_center_position()
 	
 	$AnimatedSprite2D.play("jump")
 	tween = create_tween()
@@ -22,7 +22,7 @@ func animate_cut() -> void:
 	$AnimatedSprite2D.play("fly")
 	tween = create_tween()
 	tween.set_ease(Tween.EASE_IN)
-	tween.tween_property(self, "global_position", camera_center, 0.3)
+	tween.tween_property(self, "global_position", camera_center + Vector2(120,-20), 0.2)
 	await tween.finished
 	
 	$AnimatedSprite2D.speed_scale = 2.5
