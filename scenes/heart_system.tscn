@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b52782u0ek1pu"]
+
+[ext_resource type="Script" uid="uid://buwdwcpvydhcp" path="res://scenes/heart_system.gd" id="1_udle2"]
+[ext_resource type="PackedScene" uid="uid://df4xjocmfqe23" path="res://scenes/heart.tscn" id="2_f7r0c"]
+
+[node name="HeartSystem" type="Node2D"]
+script = ExtResource("1_udle2")
+
+[node name="Heart" parent="." instance=ExtResource("2_f7r0c")]
+frame_progress = 0.7204525
+
+[node name="Heart2" parent="." instance=ExtResource("2_f7r0c")]
+frame_progress = 0.0
+offset = Vector2(14, 0)
+
+[node name="Heart3" parent="." instance=ExtResource("2_f7r0c")]
+offset = Vector2(28, 0)

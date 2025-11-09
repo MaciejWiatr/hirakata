@@ -1,7 +1,8 @@
 extends Node2D
 
-# Preload your Kata scene
-const KataScene = preload("res://scenes/kata.tscn")  # Adjust path to your Kata scene
+const KataScene = preload("res://scenes/kata.tscn")
+
+var GUESS_TIME = 10 
 
 var hiragana_list = [
 	# Vowels
@@ -39,19 +40,22 @@ var current_item = null
 var current_kata_node = null
 
 func _ready() -> void:
-	
 	pick_new_item()
 	
 	$MainInput.grab_focus()
 	$MainInput.text_changed.connect(_on_text_changed)
 	
+
+func _process(delta) -> void:
+	$"Timer label".text = str($GuessTimer.time_left).pad_decimals(1)
+
 func _on_text_changed(new_text: String) -> void:
 	if current_item and new_text == current_item.romaji:
 		$Ninja.animate_cut()
-		$Camera2D.shake()
 		
 		await get_tree().create_timer(0.2).timeout
 		
+		$Camera2D.shake()
 		$MainInput.clear()
 		
 		if current_kata_node:
@@ -62,34 +66,28 @@ func _on_text_changed(new_text: String) -> void:
 		current_score += 1
 		
 func pick_new_item():
+	$GuessTimer.start(GUESS_TIME)
+	
 	await get_tree().create_timer(0.4).timeout
 	
 	current_item = hiragana_list.pick_random()
 	
-	var spawn_pos = get_random_border_position()
 	var center = get_viewport_rect().size / 2
 	
 	var kata = KataScene.instantiate()
-	kata.setup(spawn_pos, center, current_item.hiragana)
+	kata.setup($Camera2D.get_screen_center_position(), center, current_item.hiragana)
 	
 	add_child(kata)
 	
 	current_kata_node = kata
 
-func get_random_border_position(margin: float = -50) -> Vector2:
-	var viewport_size = get_viewport_rect().size
-	var spawn_pos = Vector2.ZERO
+
+func _on_guess_timer_timeout() -> void:
+	$HeartSystem.take_hit()
 	
-	var edge = randi_range(0, 3)
+	if current_kata_node:
+		current_kata_node.remove()
+		current_kata_node = null
 	
-	match edge:
-		0:  # Top edge
-			spawn_pos = Vector2(randf_range(0, viewport_size.x), -margin)
-		1:  # Right edge
-			spawn_pos = Vector2(viewport_size.x + margin, randf_range(0, viewport_size.y))
-		2:  # Bottom edge
-			spawn_pos = Vector2(randf_range(0, viewport_size.x), viewport_size.y + margin)
-		3:  # Left edge
-			spawn_pos = Vector2(-margin, randf_range(0, viewport_size.y))
+	pick_new_item()
 	
-	return spawn_pos

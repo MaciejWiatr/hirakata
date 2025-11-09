@@ -25,7 +25,7 @@ func animate_cut() -> void:
 	tween.tween_property(self, "global_position", camera_center + Vector2(120,-20), 0.2)
 	await tween.finished
 	
-	$AnimatedSprite2D.speed_scale = 2.5
+	$AnimatedSprite2D.speed_scale = 3
 	$AnimatedSprite2D.play("slash")	
 	await $AnimatedSprite2D.animation_finished
 	$AnimatedSprite2D.speed_scale = 1.5

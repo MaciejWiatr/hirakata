@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://df4xjocmfqe23"]
+
+[ext_resource type="Texture2D" uid="uid://40k41bwd1f8g" path="res://sprites/hearts.png" id="1_v30as"]
+[ext_resource type="Script" uid="uid://cgx8mapku43ss" path="res://scenes/heart.gd" id="2_ycbwg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ycbwg"]
+atlas = ExtResource("1_v30as")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krgnv"]
+atlas = ExtResource("1_v30as")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_txm48"]
+atlas = ExtResource("1_v30as")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8nnyc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ycbwg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krgnv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_txm48")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Heart" type="AnimatedSprite2D"]
+scale = Vector2(8, 8)
+sprite_frames = SubResource("SpriteFrames_8nnyc")
+frame_progress = 0.8397416
+script = ExtResource("2_ycbwg")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+visible = false
+emitting = false
+lifetime = 0.1
+one_shot = true
+speed_scale = 0.2
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 200)
+initial_velocity_min = 60.0
+initial_velocity_max = 120.0
+scale_amount_min = 8.0
+scale_amount_max = 10.0
+color = Color(0.76862746, 0.14117648, 0.1882353, 1)

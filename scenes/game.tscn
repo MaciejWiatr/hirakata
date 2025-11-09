@@ -7,7 +7,7 @@
 [ext_resource type="FontFile" uid="uid://b7bjtd4jxtvrm" path="res://fonts/DotGothic16-Regular.ttf" id="4_lbhrr"]
 [ext_resource type="Texture2D" uid="uid://d0vxsvbhx5yfd" path="res://sprites/scroll-shadow.png" id="5_p57ef"]
 [ext_resource type="Texture2D" uid="uid://bpmnoy0dtuqap" path="res://sprites/scroll.png" id="6_u5sy4"]
-[ext_resource type="Texture2D" uid="uid://chvqos6wlljvs" path="res://sprites/flower.png" id="7_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://b52782u0ek1pu" path="res://scenes/heart_system.tscn" id="9_0tnpc"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_lnu2h"]
 font = ExtResource("4_lbhrr")
@@ -44,13 +44,21 @@ offset_bottom = -238.0
 text = "10"
 label_settings = SubResource("LabelSettings_lnu2h")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Timer label" type="Label" parent="."]
+offset_left = 319.0
+offset_top = -295.0
+offset_right = 379.0
+offset_bottom = -236.0
+text = "10 s"
+label_settings = SubResource("LabelSettings_lnu2h")
+
+[node name="Scroll" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0.19607843)
 position = Vector2(-1, 202)
 scale = Vector2(8, 8)
 texture = ExtResource("5_p57ef")
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="ScrollShadow" type="Sprite2D" parent="."]
 position = Vector2(-4, 192)
 scale = Vector2(8, 8)
 texture = ExtResource("6_u5sy4")
@@ -67,20 +75,11 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_p57ef")
 alignment = 1
 max_length = 4
 
-[node name="Sprite2D3" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(-484, -248)
-scale = Vector2(8, 8)
-texture = ExtResource("7_u5sy4")
+[node name="HeartSystem" parent="." instance=ExtResource("9_0tnpc")]
+position = Vector2(-480, -240)
 
-[node name="Sprite2D4" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(-348, -248)
-scale = Vector2(8, 8)
-texture = ExtResource("7_u5sy4")
+[node name="GuessTimer" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
 
-[node name="Sprite2D5" type="Sprite2D" parent="."]
-visible = false
-position = Vector2(-212, -248)
-scale = Vector2(8, 8)
-texture = ExtResource("7_u5sy4")
+[connection signal="timeout" from="GuessTimer" to="." method="_on_guess_timer_timeout"]
