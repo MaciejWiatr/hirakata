@@ -38,16 +38,18 @@ var current_score = 0:
 
 var current_item = null
 var current_kata_node = null
+var start_zoom_value: Vector2 
 
 func _ready() -> void:
+	start_zoom_value = $Camera2D.zoom
+	
 	pick_new_item()
 	
 	$MainInput.grab_focus()
 	$MainInput.text_changed.connect(_on_text_changed)
-	
 
 func _process(delta) -> void:
-	$"Timer label".text = str($GuessTimer.time_left).pad_decimals(1)
+	update_timer()
 
 func _on_text_changed(new_text: String) -> void:
 	if current_item and new_text == current_item.romaji:
@@ -90,4 +92,7 @@ func _on_guess_timer_timeout() -> void:
 		current_kata_node = null
 	
 	pick_new_item()
+	
+func update_timer() -> void:
+	$"Timer label".text = str($GuessTimer.time_left).pad_decimals(1)
 	
